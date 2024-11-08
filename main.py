@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify
 import requests
+import os
 
 app = Flask(__name__)
 
 # Replace with your OANDA API and account details
 OANDA_API_URL = "https://api-fxpractice.oanda.com/v3/accounts/101-004-27375308-001/orders"
-OANDA_API_KEY = "d5f0fb10b45beb10148a0c052ddbb8f6-40a811e25ad56a1464a8e5b3e8bf5e21"
+OANDA_API_KEY = os.getenv("d5f0fb10b45beb10148a0c052ddbb8f6-40a811e25ad56a1464a8e5b3e8bf5e21")
 
 # Function to send a trade order to OANDA
 def place_order(instrument, units, side):
@@ -40,6 +41,3 @@ def webhook():
         return jsonify({"message": "Sell order placed", "response": order_response})
     else:
         return jsonify({"error": "Invalid action"}), 400
-
-if __name__ == '__main__':
-    app.run(port=5000)
